@@ -125,3 +125,8 @@ button:active{
     width: 100%;
     box-sizing: border-box;
 }
+
+.footer a {
+    text-decoration: none;
+    color: black;
+}
