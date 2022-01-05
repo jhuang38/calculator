@@ -4,37 +4,38 @@ const displayValue = document.querySelector(`#output`);
 // TO IMPLEMENT - run function to ensure window stays within size
 
 // adding numbers to display like how a calculator does it
+// ternary condition checks for whether an operation has just been done or equal sign was just pressed
 function appendToDisplay(e) {
     switch(e.id) {
         case 'zero':
-            (displayValue.textContent != '0' && !operatorChosen()) ? displayValue.textContent += '0': displayValue.textContent = '0';
+            (displayValue.textContent != '0' && !operatorChosen() && storeOperator != '') ? displayValue.textContent += '0': displayValue.textContent = '0';
             break;
         case 'one':
-            (displayValue.textContent != '0' && !operatorChosen()) ? displayValue.textContent += '1': displayValue.textContent = '1';
+            (displayValue.textContent != '0' && !operatorChosen() && storeOperator != '') ? displayValue.textContent += '1': displayValue.textContent = '1';
             break;
         case 'two':
-            (displayValue.textContent != '0' && !operatorChosen()) ? displayValue.textContent += '2': displayValue.textContent = '2';
+            (displayValue.textContent != '0' && !operatorChosen() && storeOperator != '') ? displayValue.textContent += '2': displayValue.textContent = '2';
             break;
         case 'three':
-            (displayValue.textContent != '0' && !operatorChosen()) ? displayValue.textContent += '3': displayValue.textContent = '3';
+            (displayValue.textContent != '0' && !operatorChosen() && storeOperator != '') ? displayValue.textContent += '3': displayValue.textContent = '3';
             break;  
         case 'four':
-            (displayValue.textContent != '0' && !operatorChosen()) ? displayValue.textContent += '4': displayValue.textContent = '4';
+            (displayValue.textContent != '0' && !operatorChosen() && storeOperator != '') ? displayValue.textContent += '4': displayValue.textContent = '4';
             break;
         case 'five':
-            (displayValue.textContent != '0' && !operatorChosen()) ? displayValue.textContent += '5': displayValue.textContent = '5';
+            (displayValue.textContent != '0' && !operatorChosen() && storeOperator != '') ? displayValue.textContent += '5': displayValue.textContent = '5';
             break;  
         case 'six':
-            (displayValue.textContent != '0' && !operatorChosen()) ? displayValue.textContent += '6': displayValue.textContent = '6';
+            (displayValue.textContent != '0' && !operatorChosen() && storeOperator != '') ? displayValue.textContent += '6': displayValue.textContent = '6';
             break;
         case 'seven':
-            (displayValue.textContent != '0' && !operatorChosen()) ? displayValue.textContent += '7': displayValue.textContent = '7';
+            (displayValue.textContent != '0' && !operatorChosen() && storeOperator != '') ? displayValue.textContent += '7': displayValue.textContent = '7';
             break;
         case 'eight':
-            (displayValue.textContent != '0' && !operatorChosen()) ? displayValue.textContent += '8': displayValue.textContent = '8';
+            (displayValue.textContent != '0' && !operatorChosen() && storeOperator != '') ? displayValue.textContent += '8': displayValue.textContent = '8';
             break;
         case 'nine':
-            (displayValue.textContent != '0' && !operatorChosen()) ? displayValue.textContent += '9': displayValue.textContent = '9';
+            (displayValue.textContent != '0' && !operatorChosen() && storeOperator != '') ? displayValue.textContent += '9': displayValue.textContent = '9';
             break;
     }
 }
@@ -126,7 +127,6 @@ function operate(operation, a, b) {
     } else if (operation == '/') {
         divide(a, b);
     }
-    console.log(equationString);
 }
 
 const addButton = document.querySelector('#add');
