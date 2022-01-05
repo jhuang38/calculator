@@ -30,6 +30,10 @@ button {
     color: white;
 }
 
+button:active{
+    transform: scale(.9);
+}
+
 .display {
     color: white;
     border-radius: 20px;
@@ -40,6 +44,7 @@ button {
     justify-content: center;
     gap: 16px;
     padding: 32px;
+    flex: 0;
 }
 
 #output {
