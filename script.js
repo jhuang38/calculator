@@ -1,24 +1,3 @@
-// operators
-function add(a, b) {return a + b};
-function subtract(a, b) {return a - b};
-function multiply(a, b) {return a * b};
-// perhaps functionality could be added for division by 0
-function divide(a, b) {
-    return a / b;
-}
-
-function operate(operation, a, b) {
-    if (operation == 'add') {
-        return add(a, b);
-    } else if (operation == 'subtract') {
-        return subtract(a, b);
-    } else if (operation == 'multiply') {
-        return multiply(a, b);
-    } else {
-        return divide(a, b);
-    }
-}
-
 // display values
 const displayValue = document.querySelector(`#output`);
 
@@ -28,37 +7,36 @@ const displayValue = document.querySelector(`#output`);
 function appendToDisplay(e) {
     switch(e.id) {
         case 'zero':
-            (displayValue.textContent != '0' && !isNewValue) ? displayValue.textContent += '0': displayValue.textContent = '0';
+            (displayValue.textContent != '0' && !operatorChosen()) ? displayValue.textContent += '0': displayValue.textContent = '0';
             break;
         case 'one':
-            (displayValue.textContent != '0' && !isNewValue) ? displayValue.textContent += '1': displayValue.textContent = '1';
+            (displayValue.textContent != '0' && !operatorChosen()) ? displayValue.textContent += '1': displayValue.textContent = '1';
             break;
         case 'two':
-            (displayValue.textContent != '0' && !isNewValue) ? displayValue.textContent += '2': displayValue.textContent = '2';
+            (displayValue.textContent != '0' && !operatorChosen()) ? displayValue.textContent += '2': displayValue.textContent = '2';
             break;
         case 'three':
-            (displayValue.textContent != '0' && !isNewValue) ? displayValue.textContent += '3': displayValue.textContent = '3';
+            (displayValue.textContent != '0' && !operatorChosen()) ? displayValue.textContent += '3': displayValue.textContent = '3';
             break;  
         case 'four':
-            (displayValue.textContent != '0' && !isNewValue) ? displayValue.textContent += '4': displayValue.textContent = '4';
+            (displayValue.textContent != '0' && !operatorChosen()) ? displayValue.textContent += '4': displayValue.textContent = '4';
             break;
         case 'five':
-            (displayValue.textContent != '0' && !isNewValue) ? displayValue.textContent += '5': displayValue.textContent = '5';
+            (displayValue.textContent != '0' && !operatorChosen()) ? displayValue.textContent += '5': displayValue.textContent = '5';
             break;  
         case 'six':
-            (displayValue.textContent != '0' && !isNewValue) ? displayValue.textContent += '6': displayValue.textContent = '6';
+            (displayValue.textContent != '0' && !operatorChosen()) ? displayValue.textContent += '6': displayValue.textContent = '6';
             break;
         case 'seven':
-            (displayValue.textContent != '0' && !isNewValue) ? displayValue.textContent += '7': displayValue.textContent = '7';
+            (displayValue.textContent != '0' && !operatorChosen()) ? displayValue.textContent += '7': displayValue.textContent = '7';
             break;
         case 'eight':
-            (displayValue.textContent != '0' && !isNewValue) ? displayValue.textContent += '8': displayValue.textContent = '8';
+            (displayValue.textContent != '0' && !operatorChosen()) ? displayValue.textContent += '8': displayValue.textContent = '8';
             break;
         case 'nine':
-            (displayValue.textContent != '0' && !isNewValue) ? displayValue.textContent += '9': displayValue.textContent = '9';
+            (displayValue.textContent != '0' && !operatorChosen()) ? displayValue.textContent += '9': displayValue.textContent = '9';
             break;
     }
-    lastAction = 'number';
 }
 
 // number button event listeners
@@ -125,7 +103,7 @@ const percentButton = document.querySelector('#percent');
 const decimalButton = document.querySelector('#decimal')
 
 // event listener for special operations listed above
-clearButton.addEventListener('click', () => {displayValue.textContent = '0'; prevValue = 0});
+clearButton.addEventListener('click', () => {displayValue.textContent = '0'; storeFirst = 0; equationString = ''});
 signButton.addEventListener('click',  () => {
     (displayValue.textContent[0] == '-') ? displayValue.textContent = displayValue.textContent.slice(1) : displayValue.textContent = `-${displayValue.textContent}`;
 });
@@ -133,86 +111,79 @@ percentButton.addEventListener('click', () =>  {displayValue.textContent = `${+(
 decimalButton.addEventListener('click', () => (!displayValue.textContent.includes('.')) ? displayValue.textContent += '.' : {});
 
 //operators
-let operatorActive = false;
-let isNewValue = false;
-let lastAction = '';
-let prevOperation = ' ';
-let prevValue = 0;
+function add(a, b) {displayValue.textContent = `${a+b}`};
+function subtract(a, b) {displayValue.textContent = `${a-b}`};
+function multiply(a, b) {displayValue.textContent = `${a*b}`};
+function divide(a, b) {displayValue.textContent = `${a/b}`};
+
+function operate(operation, a, b) {
+    if (operation == '+') {
+        add(a, b);
+    } else if (operation == '-') {
+        subtract(a, b);
+    } else if (operation == '*') {
+        multiply(a, b);
+    } else if (operation == '/') {
+        divide(a, b);
+    }
+    console.log(equationString);
+}
+
 const addButton = document.querySelector('#add');
 const minusButton = document.querySelector('#subtract');
 const multButton = document.querySelector('#multiply');
 const divideButton = document.querySelector('#divide');
 const equalButton = document.querySelector('#equal');
 
-function setPrevValues(setPrevOp) {
-    operatorActive = true;
-    prevValue = +displayValue.textContent;
-    prevOperation = setPrevOp;
-    isNewValue = true;
+let storeFirst = 0;
+let storeOperator = '';
+// check last element of string at the current moment
+let equationString = '';
+
+function saveFirst(operator) {
+    storeOperator = operator;
+    storeFirst = +displayValue.textContent;
+    equationString = displayValue.textContent;
+    // save string of equation
+    equationString += operator;
 }
 
-function displayNewValue(prevOp, nextOp) {
-    switch (prevOp) {
-        case 'add':
-            displayValue.textContent = add(prevValue, +displayValue.textContent)
-            break;
-        case 'subtract':
-            console.table(prevValue, +displayValue.textContent);
-            displayValue.textContent = subtract(prevValue, +displayValue.textContent);
-            console.log(displayValue.textContent)
-            break;
-        case 'multiply':
-            displayValue.textContent = multiply(prevValue, +displayValue.textContent);
-            break;
-        case 'divide':
-            displayValue.textContent = divide(prevValue, +displayValue.textContent);
-            break;
-    }
-    if (+displayValue.textContent === Infinity || +displayValue.textContent === -Infinity) {
-        prevValue = 0;
-    } else {
-        prevValue = +displayValue.textContent;
-    }
-    prevOp = nextOp;
+function chainOperation(nextOperation) {
+    operate(storeOperator, storeFirst, +displayValue.textContent);
+    storeOperator = nextOperation;
+    storeFirst = +displayValue.textContent;
+    equationString = `${displayValue.textContent}${storeOperator}`;
 }
+
+function operatorChosen() {
+    return (equationString.includes('+') || equationString.includes('-') || equationString.includes('*') || equationString.includes('/')) ? true : false;
+}
+
+function buttonPress(operation) {
+    if (operatorChosen()) {
+        chainOperation(operation);
+    } else {
+        saveFirst(operation);
+    }
+    
+}   
 
 addButton.addEventListener('click', () => {
-    if (operatorActive && lastAction != 'operation') {
-        displayNewValue(prevOperation, 'add');
-    } else {
-        setPrevValues('add');
-    }
-    lastAction = 'operation';
+    buttonPress('+');
 });
+
 minusButton.addEventListener('click', () => {
-    if (operatorActive && lastAction != 'operation') {
-        displayNewValue(prevOperation, 'subtract');
-    } else {
-        setPrevValues('subtract');
-    }
-    lastAction = 'operation';
+    buttonPress('-');
 });
 multButton.addEventListener('click', () => {
-    if (operatorActive && lastAction != 'operation') {
-        displayNewValue(prevOperation, 'multiply');
-    } else {
-        setPrevValues('multiply');
-    }
-    lastAction = 'operation';
+    buttonPress('*');
 });
 divideButton.addEventListener('click', () => {
-    if (operatorActive && lastAction != 'operation') {
-        displayNewValue(prevOperation, 'divide');
-    } else {
-        setPrevValues('divide');
-    }
-    lastAction = 'operation';
+    buttonPress('/');
 });
 equalButton.addEventListener('click', () => {
-    if (operatorActive && lastAction != 'operation') {
-        displayNewValue(prevOperation, '');
-        operatorActive = false;
-    }
-    lastAction = 'operation';
-    
+    operate(storeOperator, storeFirst, +displayValue.textContent);
+    storeFirst = +displayValue.textContent;
+    storeOperator = '';
+    equationString = `${storeFirst}`;
 });
