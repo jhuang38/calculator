@@ -58,6 +58,7 @@ function appendToDisplay(e) {
             (displayValue.textContent != '0' && !isNewValue) ? displayValue.textContent += '9': displayValue.textContent = '9';
             break;
     }
+    lastAction = 'number';
 }
 
 // number button event listeners
@@ -129,11 +130,12 @@ signButton.addEventListener('click',  () => {
     (displayValue.textContent[0] == '-') ? displayValue.textContent = displayValue.textContent.slice(1) : displayValue.textContent = `-${displayValue.textContent}`;
 });
 percentButton.addEventListener('click', () =>  {displayValue.textContent = `${+(displayValue.textContent) / 100}`});
-decimalButton.addEventListener('click', () => displayValue.textContent += '.');
+decimalButton.addEventListener('click', () => (!displayValue.textContent.includes('.')) ? displayValue.textContent += '.' : {});
 
 //operators
 let operatorActive = false;
 let isNewValue = false;
+let lastAction = '';
 let prevOperation = ' ';
 let prevValue = 0;
 const addButton = document.querySelector('#add');
@@ -175,37 +177,42 @@ function displayNewValue(prevOp, nextOp) {
 }
 
 addButton.addEventListener('click', () => {
-    if (operatorActive) {
+    if (operatorActive && lastAction != 'operation') {
         displayNewValue(prevOperation, 'add');
     } else {
         setPrevValues('add');
     }
+    lastAction = 'operation';
 });
 minusButton.addEventListener('click', () => {
-    if (operatorActive) {
+    if (operatorActive && lastAction != 'operation') {
         displayNewValue(prevOperation, 'subtract');
     } else {
         setPrevValues('subtract');
     }
+    lastAction = 'operation';
 });
 multButton.addEventListener('click', () => {
-    if (operatorActive) {
+    if (operatorActive && lastAction != 'operation') {
         displayNewValue(prevOperation, 'multiply');
     } else {
         setPrevValues('multiply');
     }
+    lastAction = 'operation';
 });
 divideButton.addEventListener('click', () => {
-    if (operatorActive) {
+    if (operatorActive && lastAction != 'operation') {
         displayNewValue(prevOperation, 'divide');
     } else {
         setPrevValues('divide');
     }
+    lastAction = 'operation';
 });
 equalButton.addEventListener('click', () => {
-    if (operatorActive) {
+    if (operatorActive && lastAction != 'operation') {
         displayNewValue(prevOperation, '');
         operatorActive = false;
     }
+    lastAction = 'operation';
     
 });
