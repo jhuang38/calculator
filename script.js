@@ -124,7 +124,7 @@ const percentButton = document.querySelector('#percent');
 const decimalButton = document.querySelector('#decimal')
 
 // event listener for special operations listed above
-clearButton.addEventListener('click', () => {displayValue.textContent = '0';});
+clearButton.addEventListener('click', () => {displayValue.textContent = '0'; prevValue = 0});
 signButton.addEventListener('click',  () => {
     (displayValue.textContent[0] == '-') ? displayValue.textContent = displayValue.textContent.slice(1) : displayValue.textContent = `-${displayValue.textContent}`;
 });
@@ -134,7 +134,7 @@ decimalButton.addEventListener('click', () => displayValue.textContent += '.');
 //operators
 let operatorActive = false;
 let isNewValue = false;
-let prevOperation = '';
+let prevOperation = ' ';
 let prevValue = 0;
 const addButton = document.querySelector('#add');
 const minusButton = document.querySelector('#subtract');
@@ -203,7 +203,9 @@ divideButton.addEventListener('click', () => {
     }
 });
 equalButton.addEventListener('click', () => {
-    displayNewValue(prevOperation, '');
-    operatorActive = false;
+    if (operatorActive) {
+        displayNewValue(prevOperation, '');
+        operatorActive = false;
+    }
     
 });
