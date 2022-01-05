@@ -5,39 +5,43 @@ const displayValue = document.querySelector(`#output`);
 
 // adding numbers to display like how a calculator does it
 // ternary condition checks for whether an operation has just been done or equal sign was just pressed
+function inputComparison() {
+    return (displayValue.textContent != '0' && (lastAction != 'operation' || !operatorChosen())) ? true : false;
+}
 function appendToDisplay(e) {
     switch(e.id) {
         case 'zero':
-            (displayValue.textContent != '0' && !operatorChosen() && storeOperator != '') ? displayValue.textContent += '0': displayValue.textContent = '0';
+            (inputComparison()) ? displayValue.textContent += '0': displayValue.textContent = '0';
             break;
         case 'one':
-            (displayValue.textContent != '0' && !operatorChosen() && storeOperator != '') ? displayValue.textContent += '1': displayValue.textContent = '1';
+            (inputComparison()) ? displayValue.textContent += '1': displayValue.textContent = '1';
             break;
         case 'two':
-            (displayValue.textContent != '0' && !operatorChosen() && storeOperator != '') ? displayValue.textContent += '2': displayValue.textContent = '2';
+            (inputComparison()) ? displayValue.textContent += '2': displayValue.textContent = '2';
             break;
         case 'three':
-            (displayValue.textContent != '0' && !operatorChosen() && storeOperator != '') ? displayValue.textContent += '3': displayValue.textContent = '3';
+            (inputComparison()) ? displayValue.textContent += '3': displayValue.textContent = '3';
             break;  
         case 'four':
-            (displayValue.textContent != '0' && !operatorChosen() && storeOperator != '') ? displayValue.textContent += '4': displayValue.textContent = '4';
+            (inputComparison()) ? displayValue.textContent += '4': displayValue.textContent = '4';
             break;
         case 'five':
-            (displayValue.textContent != '0' && !operatorChosen() && storeOperator != '') ? displayValue.textContent += '5': displayValue.textContent = '5';
+            (inputComparison()) ? displayValue.textContent += '5': displayValue.textContent = '5';
             break;  
         case 'six':
-            (displayValue.textContent != '0' && !operatorChosen() && storeOperator != '') ? displayValue.textContent += '6': displayValue.textContent = '6';
+            (inputComparison()) ? displayValue.textContent += '6': displayValue.textContent = '6';
             break;
         case 'seven':
-            (displayValue.textContent != '0' && !operatorChosen() && storeOperator != '') ? displayValue.textContent += '7': displayValue.textContent = '7';
+            (inputComparison()) ? displayValue.textContent += '7': displayValue.textContent = '7';
             break;
         case 'eight':
-            (displayValue.textContent != '0' && !operatorChosen() && storeOperator != '') ? displayValue.textContent += '8': displayValue.textContent = '8';
+            (inputComparison()) ? displayValue.textContent += '8': displayValue.textContent = '8';
             break;
         case 'nine':
-            (displayValue.textContent != '0' && !operatorChosen() && storeOperator != '') ? displayValue.textContent += '9': displayValue.textContent = '9';
+            (inputComparison) ? displayValue.textContent += '9': displayValue.textContent = '9';
             break;
     }
+    lastAction = 'num';
 }
 
 // number button event listeners
@@ -127,6 +131,7 @@ function operate(operation, a, b) {
     } else if (operation == '/') {
         divide(a, b);
     }
+    lastAction = 'operation';
 }
 
 const addButton = document.querySelector('#add');
@@ -139,6 +144,7 @@ let storeFirst = 0;
 let storeOperator = '';
 // check last element of string at the current moment
 let equationString = '';
+let lastAction = 'num';
 
 function saveFirst(operator) {
     storeOperator = operator;
@@ -165,13 +171,13 @@ function buttonPress(operation) {
     } else {
         saveFirst(operation);
     }
+    lastAction = 'operation';
     
 }   
 
 addButton.addEventListener('click', () => {
     buttonPress('+');
 });
-
 minusButton.addEventListener('click', () => {
     buttonPress('-');
 });
